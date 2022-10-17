@@ -21,7 +21,7 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-*-lock.json
+package-lock.json
 
 # Visual Studio Code
 .vscode/*
