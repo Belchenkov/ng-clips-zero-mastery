@@ -13,6 +13,10 @@ export class ModalService {
 
   constructor() { }
 
+  isModalOpen(id: string): boolean {
+    return !!this.modals.find(el => el.id === id)?.visible;
+  }
+
   register(id: string) {
     this.modals.push({
       id,
@@ -20,8 +24,8 @@ export class ModalService {
     });
   }
 
-  isModalOpen(id: string): boolean {
-    return !!this.modals.find(el => el.id === id)?.visible;
+  unregister(id: string) {
+    this.modals = this.modals.filter(el => el.id !== id);
   }
 
   toggleModal(id: string): void {

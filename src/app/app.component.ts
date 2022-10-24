@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-clips-zero-mastery';
+  title = 'Clips Zero';
+  showModal = true;
 }
