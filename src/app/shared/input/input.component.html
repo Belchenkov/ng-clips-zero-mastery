@@ -34,4 +34,10 @@
   >
     Value too high.
   </p>
+  <p
+    *ngIf="control.errors?.pattern"
+    class="text-red-400"
+  >
+    Password must be at least eight characters, at least one letter and one number
+  </p>
 </ng-container>
