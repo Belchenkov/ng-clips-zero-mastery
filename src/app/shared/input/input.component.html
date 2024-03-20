@@ -3,6 +3,8 @@
   [type]="type"
   [placeholder]="placeholder"
   [formControl]="control"
+  [mask]="format"
+  [dropSpecialCharacters]="false"
 />
 <ng-container *ngIf="control.touched && control.dirty">
   <p
