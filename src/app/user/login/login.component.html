@@ -1,4 +1,7 @@
-<form #loginForm="ngForm">
+<form
+  #loginForm="ngForm"
+  (ngSubmit)="login()"
+>
   <!-- Email -->
   <div class="mb-3">
     <label class="inline-block mb-2">Email</label>
@@ -30,14 +33,23 @@
                   duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
            placeholder="Password"
            required
+           name="password"
            #password="ngModel"
           [(ngModel)]="credentials.password"
     />
+    <p
+      *ngIf="password.errors && password.touched && password.dirty"
+      class="text-red-400"
+    >
+      Password is invalid
+    </p>
   </div>
   <button
           type="submit"
-          class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition
-                  hover:bg-indigo-500">
+          class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition disabled:opacity-50 disabled:bg-indigo-400
+                  hover:bg-indigo-500"
+          [disabled]="loginForm.invalid"
+  >
     Submit
   </button>
 </form>
