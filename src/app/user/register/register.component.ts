@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-register',
@@ -7,6 +8,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  constructor(
+    private auth: AngularFireAuth,
+  ) {}
+
   name = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
@@ -47,9 +52,21 @@ export class RegisterComponent {
   alertColor = 'blue';
   alertMsg = '';
 
-  register() {
+  async register() {
     this.showAlert = true;
     this.alertMsg = 'Please wait! Your account is being created.';
     this.alertColor = 'blue';
+
+    const { email, password } = this.registerForm.value;
+
+    if (!email || !password) {
+      console.log('Empty email or password');
+      return;
+    }
+
+    const userCred = await this.auth.createUserWithEmailAndPassword(
+      email,
+      password,
+    )
   }
 }
