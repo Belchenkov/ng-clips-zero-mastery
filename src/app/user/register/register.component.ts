@@ -12,6 +12,8 @@ export class RegisterComponent {
     private auth: AngularFireAuth,
   ) {}
 
+  inSubmission = false;
+
   name = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
@@ -56,6 +58,7 @@ export class RegisterComponent {
     this.showAlert = true;
     this.alertMsg = 'Please wait! Your account is being created.';
     this.alertColor = 'blue';
+    this.inSubmission = true;
 
     const { email, password } = this.registerForm.value;
 
@@ -64,9 +67,22 @@ export class RegisterComponent {
       return;
     }
 
-    const userCred = await this.auth.createUserWithEmailAndPassword(
-      email,
-      password,
-    )
+    try {
+      const userCred = await this.auth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+
+      console.log(userCred);
+    } catch (err) {
+      console.error(err);
+      this.alertMsg = 'An unexpected error occurred. Please try again later.'
+      this.alertColor = 'red';
+      this.inSubmission = false;
+      return;
+    }
+
+    this.alertMsg = 'Success! Your account has been created.';
+    this.alertColor = 'green';
   }
 }
