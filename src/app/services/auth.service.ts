@@ -27,12 +27,21 @@ export class AuthService {
       userData.password,
     );
 
+    if (!userCred.user) {
+      throw new Error('User cant be found');
+    }
+
     await this.usersCollection
-      .add({
+      .doc(userCred.user.uid)
+      .set({
         name: userData.name,
         email: userData.email,
         age: userData.age,
         phoneNumber: userData.phoneNumber,
       });
+
+    await userCred.user.updateProfile({
+      displayName: userData.name,
+    });
   }
 }
