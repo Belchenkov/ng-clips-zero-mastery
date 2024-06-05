@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ElementRef,
+  OnDestroy,
+} from '@angular/core';
 
 import { ModalService } from '../../services/modal.service';
 
@@ -7,13 +13,17 @@ import { ModalService } from '../../services/modal.service';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnDestroy {
   @Input() modalId = '';
 
   constructor(
     public modal: ModalService,
     public el: ElementRef,
   ) { }
+
+  ngOnDestroy(): void {
+    document.body.removeChild(this.el.nativeElement);
+  }
 
   ngOnInit(): void {
     document.body.appendChild(this.el.nativeElement);
